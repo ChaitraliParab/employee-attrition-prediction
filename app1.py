@@ -92,19 +92,21 @@ model_choice = st.sidebar.selectbox(
     list(models.keys())
 )
 st.sidebar.caption("Adjust the sliders to describe the employee")
+
 with st.sidebar.expander("Personal & Role", expanded=True):
         age = st.slider("Age", 18, 60, 30)
         job_level = st.selectbox("Job Level", [1, 2, 3, 4, 5], index=1)
         num_companies = st.slider("Companies Worked Previously", 0, 9, 2)
         distance = st.slider("Distance from Home (km)", 1, 30, 10)
+    
 with st.sidebar.expander("Compensation & Tenure", expanded=True):
         monthly_income = st.number_input(
             "Monthly Income (₹)", min_value=1000, max_value=20000, value=5000, step=500
         )
         years_company = st.slider("Years at Company", 0, 40, 5)
         salary_hike = st.slider("Last Salary Hike (%)", 11, 25, 14)
-
-    with st.sidebar.expander("Work Environment", expanded=True):
+    
+with st.sidebar.expander("Work Environment", expanded=True):
         overtime = st.radio("Works Overtime?", ["No", "Yes"], horizontal=True)
         job_sat = st.slider("Job Satisfaction", 1, 4, 3, help="1 = Low, 4 = Very High")
         env_sat = st.slider("Environment Satisfaction", 1, 4, 3, help="1 = Low, 4 = Very High")
@@ -133,7 +135,7 @@ with st.sidebar.expander("Compensation & Tenure", expanded=True):
 
     left, mid, right = st.columns([1.1, 1, 1])
 
-    with left:
+with left:
         st.subheader("Risk Assessment")
         predict_clicked = st.button("Run Prediction", type="primary", use_container_width=True)
 
@@ -183,7 +185,7 @@ st.info(f"🤖 Using Model: {model_choice}")
         else:
             st.info("Set the employee's details in the sidebar, then click **Run Prediction**.")
 
-    with mid:
+with mid:
         st.subheader("Top Attrition Predictors")
         st.caption("Feature importance from the Random Forest model")
 
@@ -200,7 +202,7 @@ st.info(f"🤖 Using Model: {model_choice}")
             ax_imp.text(val, i, f" {val*100:.1f}%", va="center", fontsize=8)
         st.pyplot(fig_imp, use_container_width=True)
 
-    with right:
+with right:
         st.subheader("Profile Snapshot")
         snapshot = pd.DataFrame({
             "Attribute": [
