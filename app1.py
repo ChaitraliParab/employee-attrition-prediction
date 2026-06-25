@@ -92,8 +92,7 @@ model_choice = st.sidebar.selectbox(
     list(models.keys())
 )
 st.sidebar.caption("Adjust the sliders to describe the employee")
-
-    with st.sidebar.expander("Personal & Role", expanded=True):
+with st.sidebar.expander("Personal & Role", expanded=True):
         age = st.slider("Age", 18, 60, 30)
         job_level = st.selectbox("Job Level", [1, 2, 3, 4, 5], index=1)
         num_companies = st.slider("Companies Worked Previously", 0, 9, 2)
