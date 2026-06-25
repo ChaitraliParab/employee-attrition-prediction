@@ -97,8 +97,7 @@ with st.sidebar.expander("Personal & Role", expanded=True):
         job_level = st.selectbox("Job Level", [1, 2, 3, 4, 5], index=1)
         num_companies = st.slider("Companies Worked Previously", 0, 9, 2)
         distance = st.slider("Distance from Home (km)", 1, 30, 10)
-
-    with st.sidebar.expander("Compensation & Tenure", expanded=True):
+with st.sidebar.expander("Compensation & Tenure", expanded=True):
         monthly_income = st.number_input(
             "Monthly Income (₹)", min_value=1000, max_value=20000, value=5000, step=500
         )
