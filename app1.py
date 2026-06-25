@@ -112,9 +112,9 @@ with st.sidebar.expander("Work Environment", expanded=True):
         env_sat = st.slider("Environment Satisfaction", 1, 4, 3, help="1 = Low, 4 = Very High")
         wlb = st.slider("Work-Life Balance", 1, 4, 3, help="1 = Bad, 4 = Excellent")
 
-    overtime_enc = 1 if overtime == "Yes" else 0
+overtime_enc = 1 if overtime == "Yes" else 0
 
-    input_row = {
+input_row = {
         "Age": age, "BusinessTravel": 1, "DailyRate": 800,
         "Department": 2, "DistanceFromHome": distance,
         "Education": 3, "EducationField": 3,
@@ -130,16 +130,16 @@ with st.sidebar.expander("Work Environment", expanded=True):
         "WorkLifeBalance": wlb, "YearsAtCompany": years_company,
         "YearsInCurrentRole": max(years_company - 2, 0),
         "YearsSinceLastPromotion": 1, "YearsWithCurrManager": 3,
-    }
-    input_df = pd.DataFrame([input_row])[FEATURE_ORDER]
+}
+input_df = pd.DataFrame([input_row])[FEATURE_ORDER]
 
-    left, mid, right = st.columns([1.1, 1, 1])
+left, mid, right = st.columns([1.1, 1, 1])
 
 with left:
         st.subheader("Risk Assessment")
         predict_clicked = st.button("Run Prediction", type="primary", use_container_width=True)
 
-        if predict_clicked:
+if predict_clicked:
            scaled = scaler.transform(input_df)
 
 selected_model = models[model_choice]
@@ -149,17 +149,17 @@ proba = selected_model.predict_proba(scaled)[0][1] * 100
 st.info(f"🤖 Using Model: {model_choice}")
 
             # Risk tier
-            if proba < 30:
+if proba < 30:
                 tier = "Low Risk"
-            elif proba < 60:
+elif proba < 60:
                 tier = "Moderate Risk"
-            else:
+else:
                 tier = "High Risk"
 
             st.metric("Attrition Probability", f"{proba:.1f}%", delta=tier)
             st.progress(min(int(proba), 100) / 100)
 
-            if pred == 1:
+if pred == 1:
                 st.error(
                     f"⚠️ **{tier}** — model flags this employee as likely to leave "
                     f"({proba:.1f}% probability)."
@@ -170,7 +170,7 @@ st.info(f"🤖 Using Model: {model_choice}")
                     "- Review workload, especially overtime patterns\n"
                     "- Discuss career progression and recognition options"
                 )
-            else:
+else:
                 st.success(
                     f"✅ **{tier}** — model predicts this employee is likely to stay "
                     f"({proba:.1f}% probability of leaving)."
@@ -182,7 +182,7 @@ st.info(f"🤖 Using Model: {model_choice}")
             log_entry["Predicted Probability (%)"] = round(proba, 1)
             log_entry["Risk Tier"] = tier
             st.session_state.history.append(log_entry)
-        else:
+else:
             st.info("Set the employee's details in the sidebar, then click **Run Prediction**.")
 
 with mid:
@@ -228,7 +228,7 @@ with right:
         bars = ax.barh(sat_df["Dimension"], sat_df["Score"], color="#2E74B5")
         ax.set_xlim(0, 4)
         ax.set_xlabel("Score")
-        for bar, val in zip(bars, sat_df["Score"]):
+for bar, val in zip(bars, sat_df["Score"]):
             ax.text(val + 0.05, bar.get_y() + bar.get_height()/2, str(val), va="center")
         st.pyplot(fig, use_container_width=True)
 
@@ -254,7 +254,7 @@ with tab_insights:
         st.divider()
         c1, c2 = st.columns(2)
 
-        with c1:
+with c1:
             fig, ax = plt.subplots(figsize=(6, 4))
             dept = (raw.groupby("Department")["Attrition"]
                        .value_counts(normalize=True).unstack() * 100)
@@ -263,7 +263,7 @@ with tab_insights:
             ax.set_xlabel("Attrition Rate (%)")
             st.pyplot(fig, use_container_width=True)
 
-        with c2:
+with c2:
             fig2, ax2 = plt.subplots(figsize=(6, 4))
             sns.countplot(x="OverTime", hue="Attrition", data=raw,
                            palette=["#2E74B5", "#C0392B"], ax=ax2)
@@ -271,14 +271,14 @@ with tab_insights:
             st.pyplot(fig2, use_container_width=True)
 
         c3, c4 = st.columns(2)
-        with c3:
+with c3:
             fig3, ax3 = plt.subplots(figsize=(6, 4))
             sns.boxplot(x="Attrition", y="MonthlyIncome", data=raw,
                         palette=["#2E74B5", "#C0392B"], ax=ax3)
             ax3.set_title("Monthly Income vs Attrition", fontweight="bold")
             st.pyplot(fig3, use_container_width=True)
 
-        with c4:
+with c4:
             fig4, ax4 = plt.subplots(figsize=(6, 4))
             tenure = (raw.groupby("YearsAtCompany")["Attrition"]
                          .value_counts(normalize=True).unstack() * 100)
@@ -288,7 +288,7 @@ with tab_insights:
             ax4.set_ylabel("Attrition Rate (%)")
             st.pyplot(fig4, use_container_width=True)
 
-    except FileNotFoundError:
+except FileNotFoundError:
         st.warning(
             "Dataset file `WA_Fn-UseC_-HR-Employee-Attrition.csv` not found in this folder. "
             "Add it alongside app.py to enable the workforce insight charts."
@@ -300,9 +300,9 @@ with tab_insights:
 # =============================================================
 with tab_history:
     st.subheader("Predictions Made This Session")
-    if len(st.session_state.history) == 0:
+if len(st.session_state.history) == 0:
         st.info("No predictions yet. Run a prediction from the **Risk Predictor** tab to see it logged here.")
-    else:
+else:
         hist_df = pd.DataFrame(st.session_state.history)
         display_cols = [
             "Age", "JobLevel", "MonthlyIncome", "OverTime", "YearsAtCompany",
@@ -313,7 +313,7 @@ with tab_history:
 
         st.bar_chart(hist_df["Predicted Probability (%)"])
 
-        if st.button("Clear Log"):
+if st.button("Clear Log"):
             st.session_state.history = []
             st.rerun()
 
