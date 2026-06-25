@@ -178,10 +178,10 @@ else:
                 st.markdown("No immediate action required — continue regular check-ins.")
 
             # Log this prediction
-            log_entry = input_row.copy()
-            log_entry["Predicted Probability (%)"] = round(proba, 1)
-            log_entry["Risk Tier"] = tier
-            st.session_state.history.append(log_entry)
+log_entry = input_row.copy()
+log_entry["Predicted Probability (%)"] = round(proba, 1)
+log_entry["Risk Tier"] = tier
+st.session_state.history.append(log_entry)
 else:
             st.info("Set the employee's details in the sidebar, then click **Run Prediction**.")
 
