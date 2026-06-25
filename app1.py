@@ -282,8 +282,7 @@ with tab_insights:
             ax4.set_xlabel("Years at Company")
             ax4.set_ylabel("Attrition Rate (%)")
             st.pyplot(fig4, use_container_width=True)
-
-except FileNotFoundError:
+    except FileNotFoundError:
         st.warning(
             "Dataset file `WA_Fn-UseC_-HR-Employee-Attrition.csv` not found in this folder. "
             "Add it alongside app.py to enable the workforce insight charts."
