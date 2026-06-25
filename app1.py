@@ -193,12 +193,12 @@ with mid:
             "Importance": importances
         }).sort_values("Importance", ascending=False).head(7)
 
-        fig_imp, ax_imp = plt.subplots(figsize=(4, 3.2))
-        ax_imp.barh(imp_df["Feature"][::-1], imp_df["Importance"][::-1], color="#2E74B5")
-        ax_imp.set_xlabel("Importance")
-        for i, (val, name) in enumerate(zip(imp_df["Importance"][::-1], imp_df["Feature"][::-1])):
-            ax_imp.text(val, i, f" {val*100:.1f}%", va="center", fontsize=8)
-        st.pyplot(fig_imp, use_container_width=True)
+    fig_imp, ax_imp = plt.subplots(figsize=(4, 3.2))
+    ax_imp.barh(imp_df["Feature"][::-1], imp_df["Importance"][::-1], color="#2E74B5")
+    ax_imp.set_xlabel("Importance")
+    for i, (val, name) in enumerate(zip(imp_df["Importance"][::-1], imp_df["Feature"][::-1])):
+        ax_imp.text(val, i, f" {val*100:.1f}%", va="center", fontsize=8)
+    st.pyplot(fig_imp, use_container_width=True)
 
 with right:
         st.subheader("Profile Snapshot")
