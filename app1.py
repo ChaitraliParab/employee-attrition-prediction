@@ -140,54 +140,52 @@ with left:
         predict_clicked = st.button("Run Prediction", type="primary", use_container_width=True)
 
 if predict_clicked:
-           scaled = scaler.transform(input_df)
+    scaled = scaler.transform(input_df)
+    pred = selected_model.predict(scaled)[0]
+    proba = selected_model.predict_proba(scaled)[0][1] * 100
 
-selected_model = models[model_choice]
+    # Risk tier
+    if proba < 30:
+        tier = "Low Risk"
+    elif proba < 60:
+        tier = "Moderate Risk"
+    else:
+        tier = "High Risk"
 
-pred = selected_model.predict(scaled)[0]
-proba = selected_model.predict_proba(scaled)[0][1] * 100
-st.info(f"🤖 Using Model: {model_choice}")
+    st.metric("Attrition Probability", f"{proba:.1f}%", delta=tier)
+    st.progress(min(int(proba), 100) / 100)
 
-            # Risk tier
-if proba < 30:
-                tier = "Low Risk"
-elif proba < 60:
-                tier = "Moderate Risk"
+    if pred == 1:
+        st.error(
+            f"⚠️ **{tier}** — model flags this employee as likely to leave "
+            f"({proba:.1f}% probability)."
+        )
+        st.markdown(
+            "**Suggested next steps:**\n"
+            "- Schedule a 1:1 check-in within 2-4 weeks\n"
+            "- Review workload and overtime\n"
+            "- Discuss career growth opportunities"
+        )
+    else:
+        st.success(
+            f"✅ **{tier}** — model predicts this employee is likely to stay "
+            f"({proba:.1f}% probability of leaving)."
+        )
+        st.markdown("No immediate action required.")
+
+    # log entry
+    log_entry = input_row.copy()
+    log_entry["Predicted Probability (%)"] = round(proba, 1)
+    log_entry["Risk Tier"] = tier
+    st.session_state.history.append(log_entry)
+
 else:
-                tier = "High Risk"
+    st.info("Set the employee's details in the sidebar, then click **Run Prediction**.")
 
-st.metric("Attrition Probability", f"{proba:.1f}%", delta=tier)
-st.progress(min(int(proba), 100) / 100)
-
-if pred == 1:
-                st.error(
-                    f"⚠️ **{tier}** — model flags this employee as likely to leave "
-                    f"({proba:.1f}% probability)."
-                )
-                st.markdown(
-                    "**Suggested next steps:**\n"
-                    "- Schedule a 1:1 check-in within the next 2-4 weeks\n"
-                    "- Review workload, especially overtime patterns\n"
-                    "- Discuss career progression and recognition options"
-                )
-else:
-                st.success(
-                    f"✅ **{tier}** — model predicts this employee is likely to stay "
-                    f"({proba:.1f}% probability of leaving)."
-                )
-                st.markdown("No immediate action required — continue regular check-ins.")
-
-            # Log this prediction
-log_entry = input_row.copy()
-log_entry["Predicted Probability (%)"] = round(proba, 1)
-log_entry["Risk Tier"] = tier
-st.session_state.history.append(log_entry)
-else:
-            st.info("Set the employee's details in the sidebar, then click **Run Prediction**.")
-
+# 👇 THESE MUST BE OUTSIDE if/else (IMPORTANT)
 with mid:
-        st.subheader("Top Attrition Predictors")
-        st.caption("Feature importance from the Random Forest model")
+    st.subheader("Top Attrition Predictors")
+    st.caption("Feature importance from the Random Forest model")
 
         importances = model.feature_importances_
         imp_df = pd.DataFrame({
