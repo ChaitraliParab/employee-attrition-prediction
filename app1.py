@@ -91,7 +91,7 @@ model_choice = st.sidebar.selectbox(
     "🤖 Select Model",
     list(models.keys())
 )
-    st.sidebar.caption("Adjust the sliders to describe the employee")
+st.sidebar.caption("Adjust the sliders to describe the employee")
 
     with st.sidebar.expander("Personal & Role", expanded=True):
         age = st.slider("Age", 18, 60, 30)
