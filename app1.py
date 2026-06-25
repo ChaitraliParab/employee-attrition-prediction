@@ -156,8 +156,8 @@ elif proba < 60:
 else:
                 tier = "High Risk"
 
-            st.metric("Attrition Probability", f"{proba:.1f}%", delta=tier)
-            st.progress(min(int(proba), 100) / 100)
+st.metric("Attrition Probability", f"{proba:.1f}%", delta=tier)
+st.progress(min(int(proba), 100) / 100)
 
 if pred == 1:
                 st.error(
