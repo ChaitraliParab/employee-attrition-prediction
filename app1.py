@@ -187,7 +187,7 @@ with mid:
     st.subheader("Top Attrition Predictors")
     st.caption("Feature importance from the Random Forest model")
 
-        importances = model.feature_importances_
+    importances = model.feature_importances_
         imp_df = pd.DataFrame({
             "Feature": FEATURE_ORDER,
             "Importance": importances
