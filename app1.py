@@ -251,7 +251,7 @@ with tab_insights:
 
         st.divider()
         c1, c2 = st.columns(2)
-with c1:
+        with c1:
             fig, ax = plt.subplots(figsize=(6, 4))
             dept = (raw.groupby("Department")["Attrition"]
                        .value_counts(normalize=True).unstack() * 100)
@@ -259,7 +259,7 @@ with c1:
             ax.set_title("Attrition Rate by Department (%)", fontweight="bold")
             ax.set_xlabel("Attrition Rate (%)")
             st.pyplot(fig, use_container_width=True)
-with c2:
+            with c2:
             fig2, ax2 = plt.subplots(figsize=(6, 4))
             sns.countplot(x="OverTime", hue="Attrition", data=raw,
                            palette=["#2E74B5", "#C0392B"], ax=ax2)
@@ -267,14 +267,13 @@ with c2:
             st.pyplot(fig2, use_container_width=True)
 
         c3, c4 = st.columns(2)
-with c3:
+        with c3:
             fig3, ax3 = plt.subplots(figsize=(6, 4))
             sns.boxplot(x="Attrition", y="MonthlyIncome", data=raw,
                         palette=["#2E74B5", "#C0392B"], ax=ax3)
             ax3.set_title("Monthly Income vs Attrition", fontweight="bold")
             st.pyplot(fig3, use_container_width=True)
-
-with c4:
+            with c4:
             fig4, ax4 = plt.subplots(figsize=(6, 4))
             tenure = (raw.groupby("YearsAtCompany")["Attrition"]
                          .value_counts(normalize=True).unstack() * 100)
