@@ -251,7 +251,6 @@ with tab_insights:
 
         st.divider()
         c1, c2 = st.columns(2)
-
 with c1:
             fig, ax = plt.subplots(figsize=(6, 4))
             dept = (raw.groupby("Department")["Attrition"]
@@ -260,7 +259,6 @@ with c1:
             ax.set_title("Attrition Rate by Department (%)", fontweight="bold")
             ax.set_xlabel("Attrition Rate (%)")
             st.pyplot(fig, use_container_width=True)
-
 with c2:
             fig2, ax2 = plt.subplots(figsize=(6, 4))
             sns.countplot(x="OverTime", hue="Attrition", data=raw,
