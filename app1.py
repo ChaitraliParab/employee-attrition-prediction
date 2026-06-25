@@ -259,7 +259,7 @@ with tab_insights:
             ax.set_title("Attrition Rate by Department (%)", fontweight="bold")
             ax.set_xlabel("Attrition Rate (%)")
             st.pyplot(fig, use_container_width=True)
-            with c2:
+        with c2:
             fig2, ax2 = plt.subplots(figsize=(6, 4))
             sns.countplot(x="OverTime", hue="Attrition", data=raw,
                            palette=["#2E74B5", "#C0392B"], ax=ax2)
@@ -273,7 +273,7 @@ with tab_insights:
                         palette=["#2E74B5", "#C0392B"], ax=ax3)
             ax3.set_title("Monthly Income vs Attrition", fontweight="bold")
             st.pyplot(fig3, use_container_width=True)
-            with c4:
+        with c4:
             fig4, ax4 = plt.subplots(figsize=(6, 4))
             tenure = (raw.groupby("YearsAtCompany")["Attrition"]
                          .value_counts(normalize=True).unstack() * 100)
