@@ -227,7 +227,7 @@ with right:
         ax.set_xlim(0, 4)
         ax.set_xlabel("Score")
 for bar, val in zip(bars, sat_df["Score"]):
-            ax.text(val + 0.05, bar.get_y() + bar.get_height()/2, str(val), va="center")
+        ax.text(val + 0.05, bar.get_y() + bar.get_height()/2, str(val), va="center")
         st.pyplot(fig, use_container_width=True)
 
 
