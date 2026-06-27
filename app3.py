@@ -1,5 +1,5 @@
 # app.py — Employee Attrition Risk Dashboard
-# Author: Chaithrali Chandrashekhar Parab
+# Author: Chaitrali Chandrashekhar Parab
 #         MMS, Aditya Institute of Management Studies and Research
 # Internship Project: Employee Attrition Prediction Using Machine Learning
 # DCyber TechLab Pvt Ltd
@@ -478,6 +478,6 @@ WA_Fn-UseC_-HR-Employee-Attrition.csv   (optional — for Workforce Insights tab
 
 st.divider()
 st.caption(
-    "Chaithrali Chandrashekhar Parab — MMS, Aditya Institute of Management Studies and Research  |  "
+    "Chaitrali Chandrashekhar Parab — MMS, Aditya Institute of Management Studies and Research  |  "
     "DCyber TechLab Pvt Ltd  |  Summer Internship 2026"
 )
